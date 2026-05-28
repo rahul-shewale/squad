@@ -1,0 +1,696 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Magnificent Seven 🎉</title>
+<link href="https://fonts.googleapis.com/css2?family=Boogaloo&family=Nunito:wght@400;700;900&family=Pacifico&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --c1: #FF3CAC;
+    --c2: #784BA0;
+    --c3: #2B86C5;
+    --c4: #FFC93C;
+    --c5: #FF6B6B;
+    --c6: #06D6A0;
+    --c7: #FF9F1C;
+    --dark: #1a1a2e;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--dark);
+    font-family: 'Nunito', sans-serif;
+    overflow-x: hidden;
+    cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32'%3E%3Ctext y='28' font-size='28'%3E⭐%3C/text%3E%3C/svg%3E"), auto;
+  }
+
+  /* ---- Animated Confetti BG ---- */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      radial-gradient(circle at 15% 20%, rgba(255,60,172,0.15) 0%, transparent 50%),
+      radial-gradient(circle at 85% 80%, rgba(43,134,197,0.15) 0%, transparent 50%),
+      radial-gradient(circle at 50% 50%, rgba(120,75,160,0.1) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* ---- Floating emoji background ---- */
+  .emoji-bg {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    overflow: hidden;
+  }
+  .emoji-bg span {
+    position: absolute;
+    font-size: clamp(1.2rem, 2vw, 2rem);
+    animation: floatUp linear infinite;
+    opacity: 0.25;
+  }
+  @keyframes floatUp {
+    0% { transform: translateY(110vh) rotate(0deg); opacity: 0; }
+    10% { opacity: 0.3; }
+    90% { opacity: 0.3; }
+    100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
+  }
+
+  /* ---- HERO ---- */
+  .hero {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    padding: 80px 20px 60px;
+  }
+
+  .hero-badge {
+    display: inline-block;
+    background: linear-gradient(135deg, var(--c4), var(--c5));
+    color: var(--dark);
+    font-family: 'Boogaloo', cursive;
+    font-size: 1rem;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    padding: 8px 24px;
+    border-radius: 999px;
+    margin-bottom: 24px;
+    animation: pulse 2s ease-in-out infinite;
+    box-shadow: 0 0 30px rgba(255,201,60,0.5);
+  }
+  @keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+  }
+
+  .hero h1 {
+    font-family: 'Pacifico', cursive;
+    font-size: clamp(3rem, 9vw, 7rem);
+    line-height: 1.1;
+    background: linear-gradient(135deg, var(--c1), var(--c4), var(--c6), var(--c3));
+    background-size: 300% 300%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: gradientShift 4s ease infinite;
+    filter: drop-shadow(0 4px 24px rgba(255,60,172,0.4));
+  }
+  @keyframes gradientShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+
+  .hero-sub {
+    font-family: 'Boogaloo', cursive;
+    font-size: clamp(1.2rem, 3vw, 1.8rem);
+    color: rgba(255,255,255,0.7);
+    margin-top: 16px;
+    letter-spacing: 1px;
+  }
+
+  .hero-tagline {
+    display: inline-block;
+    margin-top: 28px;
+    background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(255,255,255,0.15);
+    backdrop-filter: blur(10px);
+    border-radius: 16px;
+    padding: 16px 32px;
+    color: white;
+    font-size: 1.1rem;
+    font-weight: 700;
+    max-width: 600px;
+  }
+  .hero-tagline span { color: var(--c4); }
+
+  /* ---- PHOTO STRIP ---- */
+  .photo-strip {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+    padding: 0 24px 60px;
+  }
+
+  .photo-frame {
+    position: relative;
+    width: 240px;
+    border-radius: 20px;
+    overflow: visible;
+    animation: wobble 4s ease-in-out infinite;
+  }
+  .photo-frame:nth-child(1) { animation-delay: 0s; transform: rotate(-4deg); }
+  .photo-frame:nth-child(2) { animation-delay: 0.5s; transform: rotate(3deg); }
+  .photo-frame:nth-child(3) { animation-delay: 1s; transform: rotate(-2deg); }
+
+  @keyframes wobble {
+    0%, 100% { transform: rotate(var(--r, -4deg)) translateY(0); }
+    50% { transform: rotate(var(--r, -4deg)) translateY(-8px); }
+  }
+  .photo-frame:nth-child(1) { --r: -4deg; }
+  .photo-frame:nth-child(2) { --r: 3deg; }
+  .photo-frame:nth-child(3) { --r: -2deg; }
+
+  .photo-inner {
+    background: white;
+    padding: 12px 12px 50px;
+    border-radius: 16px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.5), 0 0 0 3px rgba(255,255,255,0.1);
+  }
+
+  .photo-placeholder {
+    width: 216px;
+    height: 200px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    font-size: 3rem;
+    gap: 8px;
+    position: relative;
+    overflow: hidden;
+  }
+  .photo-placeholder p {
+    font-family: 'Boogaloo', cursive;
+    font-size: 0.9rem;
+    color: rgba(255,255,255,0.8);
+    letter-spacing: 1px;
+  }
+  .pf1 { background: linear-gradient(135deg, #FF3CAC, #784BA0); }
+  .pf2 { background: linear-gradient(135deg, #2B86C5, #06D6A0); }
+  .pf3 { background: linear-gradient(135deg, #FF9F1C, #FF6B6B); }
+
+  .photo-caption {
+    position: absolute;
+    bottom: 12px;
+    left: 0; right: 0;
+    text-align: center;
+    font-family: 'Pacifico', cursive;
+    font-size: 0.95rem;
+    color: #333;
+  }
+
+  .photo-sticker {
+    position: absolute;
+    font-size: 1.8rem;
+    animation: spin 6s linear infinite;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .sticker-tl { top: -12px; left: -12px; }
+  .sticker-br { bottom: 30px; right: -12px; }
+
+  /* ---- SECTION TITLE ---- */
+  .section-title {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    padding: 20px 20px 50px;
+  }
+  .section-title h2 {
+    font-family: 'Pacifico', cursive;
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    color: white;
+    text-shadow: 0 0 40px rgba(255,60,172,0.5);
+  }
+  .section-title h2 span { color: var(--c4); }
+  .section-title p {
+    color: rgba(255,255,255,0.5);
+    margin-top: 10px;
+    font-size: 1.1rem;
+  }
+
+  /* ---- CARDS GRID ---- */
+  .cards-grid {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 28px;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 28px 80px;
+  }
+
+  .card {
+    position: relative;
+    border-radius: 24px;
+    padding: 32px 24px 28px;
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    overflow: hidden;
+    cursor: pointer;
+  }
+  .card:hover {
+    transform: translateY(-12px) scale(1.02);
+    box-shadow: 0 30px 70px rgba(0,0,0,0.4);
+  }
+  .card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: inherit;
+    filter: blur(20px);
+    opacity: 0.3;
+    z-index: -1;
+    transform: scale(1.1) translateY(20px);
+  }
+
+  .c-1 { background: linear-gradient(145deg, #1a0533, #3d1a70); border: 2px solid var(--c1); box-shadow: 0 0 30px rgba(255,60,172,0.2); }
+  .c-2 { background: linear-gradient(145deg, #001a33, #0a3d70); border: 2px solid var(--c3); box-shadow: 0 0 30px rgba(43,134,197,0.2); }
+  .c-3 { background: linear-gradient(145deg, #1a2800, #3a5c00); border: 2px solid var(--c6); box-shadow: 0 0 30px rgba(6,214,160,0.2); }
+  .c-4 { background: linear-gradient(145deg, #331a00, #704000); border: 2px solid var(--c7); box-shadow: 0 0 30px rgba(255,159,28,0.2); }
+  .c-5 { background: linear-gradient(145deg, #330010, #70002a); border: 2px solid var(--c5); box-shadow: 0 0 30px rgba(255,107,107,0.2); }
+  .c-6 { background: linear-gradient(145deg, #002033, #004a70); border: 2px solid #58d1ff; box-shadow: 0 0 30px rgba(88,209,255,0.2); }
+  .c-7 { background: linear-gradient(145deg, #1a0020, #500060); border: 2px solid #c77dff; box-shadow: 0 0 30px rgba(199,125,255,0.2); }
+
+  .card-avatar {
+    width: 88px;
+    height: 88px;
+    border-radius: 50%;
+    margin: 0 auto 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.8rem;
+    position: relative;
+    border: 3px solid rgba(255,255,255,0.2);
+  }
+  .avatar-ring {
+    position: absolute;
+    inset: -6px;
+    border-radius: 50%;
+    border: 3px solid transparent;
+    animation: rotateBorder 3s linear infinite;
+  }
+  @keyframes rotateBorder {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+  .ring-1 { border-top-color: var(--c1); border-right-color: var(--c4); }
+  .ring-2 { border-top-color: var(--c3); border-right-color: var(--c6); }
+  .ring-3 { border-top-color: var(--c6); border-right-color: var(--c3); }
+  .ring-4 { border-top-color: var(--c7); border-right-color: var(--c5); }
+  .ring-5 { border-top-color: var(--c5); border-right-color: var(--c1); }
+  .ring-6 { border-top-color: #58d1ff; border-right-color: var(--c2); }
+  .ring-7 { border-top-color: #c77dff; border-right-color: var(--c4); }
+
+  .av-1 { background: linear-gradient(135deg, var(--c1), var(--c2)); }
+  .av-2 { background: linear-gradient(135deg, var(--c3), var(--c6)); }
+  .av-3 { background: linear-gradient(135deg, var(--c6), var(--c3)); }
+  .av-4 { background: linear-gradient(135deg, var(--c7), var(--c5)); }
+  .av-5 { background: linear-gradient(135deg, var(--c5), var(--c1)); }
+  .av-6 { background: linear-gradient(135deg, #58d1ff, var(--c2)); }
+  .av-7 { background: linear-gradient(135deg, #c77dff, var(--c4)); }
+
+  .card-number {
+    position: absolute;
+    top: 14px;
+    right: 18px;
+    font-family: 'Pacifico', cursive;
+    font-size: 2.5rem;
+    opacity: 0.08;
+    color: white;
+    line-height: 1;
+  }
+
+  .card h3 {
+    font-family: 'Pacifico', cursive;
+    font-size: 1.35rem;
+    color: white;
+    margin-bottom: 6px;
+    text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+  }
+
+  .card-role {
+    display: inline-block;
+    padding: 5px 16px;
+    border-radius: 999px;
+    font-size: 0.8rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    margin-bottom: 16px;
+  }
+  .role-1 { background: var(--c1); color: white; }
+  .role-2 { background: var(--c3); color: white; }
+  .role-3 { background: var(--c6); color: var(--dark); }
+  .role-4 { background: var(--c7); color: var(--dark); }
+  .role-5 { background: var(--c5); color: white; }
+  .role-6 { background: #58d1ff; color: var(--dark); }
+  .role-7 { background: #c77dff; color: white; }
+
+  .card-bio {
+    color: rgba(255,255,255,0.65);
+    font-size: 0.9rem;
+    line-height: 1.6;
+    margin-bottom: 18px;
+  }
+
+  .card-vibes {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .vibe-tag {
+    background: rgba(255,255,255,0.1);
+    color: rgba(255,255,255,0.8);
+    padding: 4px 12px;
+    border-radius: 999px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    border: 1px solid rgba(255,255,255,0.1);
+  }
+
+  .card-fun {
+    position: absolute;
+    bottom: 12px;
+    right: 14px;
+    font-size: 1.4rem;
+    animation: bounce 1.5s ease-in-out infinite;
+  }
+  @keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-6px); }
+  }
+
+  /* ---- FOOTER ---- */
+  .footer {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    padding: 50px 20px 70px;
+    border-top: 1px solid rgba(255,255,255,0.07);
+  }
+  .footer-title {
+    font-family: 'Pacifico', cursive;
+    font-size: clamp(1.8rem, 4vw, 3rem);
+    background: linear-gradient(90deg, var(--c1), var(--c4), var(--c6));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 16px;
+  }
+  .footer-text {
+    color: rgba(255,255,255,0.45);
+    font-size: 1rem;
+    max-width: 500px;
+    margin: 0 auto;
+    line-height: 1.7;
+  }
+  .footer-emojis {
+    font-size: 2.5rem;
+    margin: 24px 0;
+    letter-spacing: 8px;
+    animation: rainbowText 2s linear infinite;
+  }
+  @keyframes rainbowText {
+    0% { filter: hue-rotate(0deg); }
+    100% { filter: hue-rotate(360deg); }
+  }
+  .made-with {
+    margin-top: 30px;
+    color: rgba(255,255,255,0.25);
+    font-size: 0.85rem;
+  }
+  .made-with span { color: var(--c5); }
+
+  /* ---- TICKER ---- */
+  .ticker-wrap {
+    position: relative;
+    z-index: 1;
+    background: linear-gradient(90deg, var(--c1), var(--c4), var(--c6), var(--c3), var(--c1));
+    background-size: 300% 100%;
+    animation: gradientShift 4s linear infinite;
+    padding: 14px 0;
+    overflow: hidden;
+    margin-bottom: 60px;
+  }
+  .ticker {
+    display: flex;
+    white-space: nowrap;
+    animation: ticker 20s linear infinite;
+    font-family: 'Boogaloo', cursive;
+    font-size: 1.1rem;
+    color: white;
+    letter-spacing: 2px;
+  }
+  .ticker span { margin: 0 30px; }
+  @keyframes ticker {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+</style>
+</head>
+<body>
+
+<!-- Floating emojis background -->
+<div class="emoji-bg" id="emojiBg"></div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-badge">✨ Squad Goals ✨</div>
+  <h1>The Magnificent Seven</h1>
+  <p class="hero-sub">Seven people. Zero chill. Infinite chaos. 🎉</p>
+  <div class="hero-tagline">
+    We came, we saw, we <span>took over the group chat</span> and never gave it back 🔥
+  </div>
+</section>
+
+<!-- PHOTO STRIP -->
+<section class="photo-strip">
+  <div class="photo-frame">
+    <div class="photo-inner">
+      <div class="photo-placeholder pf1">
+        <span>📸</span>
+        <p>ADD PHOTO HERE</p>
+      </div>
+    </div>
+    <div class="photo-sticker sticker-tl" style="animation-delay:0s">⭐</div>
+    <div class="photo-sticker sticker-br" style="animation-delay:1s">🌈</div>
+    <div class="photo-caption">The Chaos Crew</div>
+  </div>
+  <div class="photo-frame">
+    <div class="photo-inner">
+      <div class="photo-placeholder pf2">
+        <span>📸</span>
+        <p>ADD PHOTO HERE</p>
+      </div>
+    </div>
+    <div class="photo-sticker sticker-tl" style="animation-delay:0.7s">💥</div>
+    <div class="photo-sticker sticker-br" style="animation-delay:1.5s">🎊</div>
+    <div class="photo-caption">Best Vibes Only</div>
+  </div>
+  <div class="photo-frame">
+    <div class="photo-inner">
+      <div class="photo-placeholder pf3">
+        <span>📸</span>
+        <p>ADD PHOTO HERE</p>
+      </div>
+    </div>
+    <div class="photo-sticker sticker-tl" style="animation-delay:1.2s">🔥</div>
+    <div class="photo-sticker sticker-br" style="animation-delay:0.3s">🎉</div>
+    <div class="photo-caption">No Caption Needed</div>
+  </div>
+</section>
+
+<!-- TICKER -->
+<div class="ticker-wrap">
+  <div class="ticker">
+    <span>🎉 Seven is the Luckiest Number</span>
+    <span>🔥 Also the Loudest Number</span>
+    <span>💫 And Definitely the Funniest</span>
+    <span>🌈 Together We Are Unstoppable</span>
+    <span>🎊 Or at Least Unforgettable</span>
+    <span>⭐ The Squad That Slays Together Stays Together</span>
+    <span>🎉 Seven is the Luckiest Number</span>
+    <span>🔥 Also the Loudest Number</span>
+    <span>💫 And Definitely the Funniest</span>
+    <span>🌈 Together We Are Unstoppable</span>
+    <span>🎊 Or at Least Unforgettable</span>
+    <span>⭐ The Squad That Slays Together Stays Together</span>
+  </div>
+</div>
+
+<!-- MEET THE SQUAD -->
+<section class="section-title">
+  <h2>Meet the <span>Squad</span> 🎭</h2>
+  <p>Seven humans. One collective personality disorder. All love.</p>
+</section>
+
+<div class="cards-grid">
+
+  <!-- 1. Dipika -->
+  <div class="card c-1">
+    <div class="card-number">01</div>
+    <div class="card-avatar av-1">
+      🧑‍💻
+      <div class="avatar-ring ring-1"></div>
+    </div>
+    <h3>Dipika Dhule</h3>
+    <div class="card-role role-1">Data Engineer</div>
+    <p class="card-bio">Turns chaos into clean datasets. If your life was a CSV, she'd fix all the missing values. Probably dreams in SQL. 🗄️</p>
+    <div class="card-vibes">
+      <span class="vibe-tag">📊 Data Wizard</span>
+      <span class="vibe-tag">☕ Coffee First</span>
+      <span class="vibe-tag">🐍 Python Gang</span>
+    </div>
+    <div class="card-fun">✨</div>
+  </div>
+
+  <!-- 2. Rahul -->
+  <div class="card c-2">
+    <div class="card-number">02</div>
+    <div class="card-avatar av-2">
+      👨‍💻
+      <div class="avatar-ring ring-2"></div>
+    </div>
+    <h3>Rahul Shewale</h3>
+    <div class="card-role role-2">Software Developer</div>
+    <p class="card-bio">Full-stack sorcerer from Mumbai. Writes code so clean it should be illegal. Debugs at midnight, ships by morning. 🚀</p>
+    <div class="card-vibes">
+      <span class="vibe-tag">⚡ Laravel Lord</span>
+      <span class="vibe-tag">📱 App Builder</span>
+      <span class="vibe-tag">🏍️ Royal Enfield</span>
+    </div>
+    <div class="card-fun">💻</div>
+  </div>
+
+  <!-- 3. Karuna -->
+  <div class="card c-3">
+    <div class="card-number">03</div>
+    <div class="card-avatar av-3">
+      👩‍🎓
+      <div class="avatar-ring ring-3"></div>
+    </div>
+    <h3>Karuna Sonwane</h3>
+    <div class="card-role role-3">MBA Enthusiast</div>
+    <p class="card-bio">Can turn any conversation into a case study. Knows the ROI of everything including friendship (very high). 📈</p>
+    <div class="card-vibes">
+      <span class="vibe-tag">📚 Strategy Queen</span>
+      <span class="vibe-tag">💼 Boss Mode</span>
+      <span class="vibe-tag">🎯 Goal Digger</span>
+    </div>
+    <div class="card-fun">🌟</div>
+  </div>
+
+  <!-- 4. Harsh -->
+  <div class="card c-4">
+    <div class="card-number">04</div>
+    <div class="card-avatar av-4">
+      🧑‍🎨
+      <div class="avatar-ring ring-4"></div>
+    </div>
+    <h3>Harsh Maravadi</h3>
+    <div class="card-role role-4">The Wild Card</div>
+    <p class="card-bio">The squad's chaos agent. Shows up with big energy, zero plan, and somehow makes everything 10x more fun. We love him. 🎲</p>
+    <div class="card-vibes">
+      <span class="vibe-tag">😂 Class Clown</span>
+      <span class="vibe-tag">🎮 Gamer</span>
+      <span class="vibe-tag">🌶️ Spicy Takes</span>
+    </div>
+    <div class="card-fun">🔥</div>
+  </div>
+
+  <!-- 5. Priya (dummy) -->
+  <div class="card c-5">
+    <div class="card-number">05</div>
+    <div class="card-avatar av-5">
+      👩‍🍳
+      <div class="avatar-ring ring-5"></div>
+    </div>
+    <h3>Priya Sharma</h3>
+    <div class="card-role role-5">Food Blogger</div>
+    <p class="card-bio">Documents every meal before eating. Has more food pics than selfies. The group's official restaurant rater & biryani critic. 🍛</p>
+    <div class="card-vibes">
+      <span class="vibe-tag">🍜 Foodie Pro</span>
+      <span class="vibe-tag">📸 Content Creator</span>
+      <span class="vibe-tag">🌮 Always Hungry</span>
+    </div>
+    <div class="card-fun">🍕</div>
+  </div>
+
+  <!-- 6. Arjun (dummy) -->
+  <div class="card c-6">
+    <div class="card-number">06</div>
+    <div class="card-avatar av-6">
+      🧑‍🎤
+      <div class="avatar-ring ring-6"></div>
+    </div>
+    <h3>Arjun Mehta</h3>
+    <div class="card-role role-6">Music Producer</div>
+    <p class="card-bio">Has a playlist for every mood, every situation, every weather condition. Currently working on a song about debugging code. 🎵</p>
+    <div class="card-vibes">
+      <span class="vibe-tag">🎧 Beat Master</span>
+      <span class="vibe-tag">🎹 Piano Nerd</span>
+      <span class="vibe-tag">🎶 Mood Setter</span>
+    </div>
+    <div class="card-fun">🎸</div>
+  </div>
+
+  <!-- 7. Sneha (dummy) -->
+  <div class="card c-7">
+    <div class="card-number">07</div>
+    <div class="card-avatar av-7">
+      👩‍🏋️
+      <div class="avatar-ring ring-7"></div>
+    </div>
+    <h3>Sneha Patil</h3>
+    <div class="card-role role-7">Fitness Freak</div>
+    <p class="card-bio">Wakes up at 5am, goes to gym, still has more energy than everyone combined. Makes the rest of us feel guilty for breathing. 💪</p>
+    <div class="card-vibes">
+      <span class="vibe-tag">💪 Gym Rat</span>
+      <span class="vibe-tag">🥗 Meal Prep</span>
+      <span class="vibe-tag">🏃 No Rest Days</span>
+    </div>
+    <div class="card-fun">⚡</div>
+  </div>
+
+</div>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-emojis">🎉🔥💫🌈⭐🎊💥</div>
+  <div class="footer-title">Seven & Forever 🤙</div>
+  <p class="footer-text">
+    From random group chats to real memories — this is us. The weird, wonderful, chaotic, beautiful Squad of Seven.
+    <br><br>
+    No filter. No edits. Pure us. 🫶
+  </p>
+  <p class="made-with" style="margin-top: 40px;">Made with <span>♥</span> & too much chai ☕</p>
+</footer>
+
+<script>
+  // Generate floating emojis
+  const emojis = ['🎉','🔥','💫','🌈','⭐','🎊','💥','🎈','✨','🎶','❤️','🦄','🍕','🎮','💎'];
+  const bg = document.getElementById('emojiBg');
+  for (let i = 0; i < 30; i++) {
+    const span = document.createElement('span');
+    span.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+    span.style.left = Math.random() * 100 + 'vw';
+    span.style.animationDuration = (8 + Math.random() * 15) + 's';
+    span.style.animationDelay = (Math.random() * 15) + 's';
+    bg.appendChild(span);
+  }
+
+  // Card hover sparkle effect
+  document.querySelectorAll('.card').forEach(card => {
+    card.addEventListener('mousemove', e => {
+      const rect = card.getBoundingClientRect();
+      const x = ((e.clientX - rect.left) / rect.width) * 100;
+      const y = ((e.clientY - rect.top) / rect.height) * 100;
+      card.style.setProperty('--mouse-x', x + '%');
+      card.style.setProperty('--mouse-y', y + '%');
+    });
+  });
+</script>
+</body>
+</html>
